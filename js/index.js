@@ -86,6 +86,20 @@ const troopCard = (data, index) => {
     )
 }
 
+const Totals = (resources, time) => {
+
+    let rows = [];
+    let total = 0;
+    resources.map ( (rec, i) => {
+        total += Math.round(rec / time,0);
+        rows.push(<td  key={i} className="text-right"> { Math.round(rec / time,0) }</td>)
+        return;
+    })
+    rows.unshift(<td key={100}><small>( { total } ) </small></td>)
+
+    return rows
+}
+
 const ResourcesTable = (data) => {
 
     totals = [0,0,0,0];
@@ -96,7 +110,7 @@ const ResourcesTable = (data) => {
                 <thead>
                     <tr>
                         <th>Tropa</th>
-                        <th>Cantidad de entrenamiento</th>
+                        <th>Entrenamiento x día</th>
                         <th className="text-right">Madera total</th>
                         <th className="text-right">Barro total</th>
                         <th className="text-right">Hierro total</th>
@@ -108,12 +122,12 @@ const ResourcesTable = (data) => {
                         return ( TroopRow(troop, i) )
                     })}
                     <tr>
-                        <th>TOTAL</th>
-                        <td></td>
-                        <td className="text-right"> { totals[0] }</td>
-                        <td className="text-right"> { totals[1] }</td>
-                        <td className="text-right"> { totals[2] }</td>
-                        <td className="text-right"> { totals[3] }</td>
+                        <th>TOTAL DIA</th>
+                        { Totals(totals, 1)}
+                    </tr>
+                    <tr>
+                        <th>TOTAL HORA</th>
+                        { Totals(totals, 24)}
                     </tr>
                 </tbody>
             </table>
@@ -191,7 +205,6 @@ const Home = () => {
                         <div className="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">{ Amudiel() }</div>
                         <div className="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab"> { Nefili() } </div>
                         <div className="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">{ Lamia() }</div>
-                        
                     </div>
                 </div>
             </div>
